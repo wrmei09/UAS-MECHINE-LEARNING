@@ -2,9 +2,14 @@ import streamlit as st
 import pickle
 import numpy as np
 
-# Memuat semua model
-with open('C:/Users/roish/Downloads/Dataset UAS/Dataset_Supervised/svm_model.pkl', 'rb') as f:
-    model_SVM = pickle.load(f)
+# Memuat file model SVM
+model_path = 'd:/svm_model.pkl'  # Perbaiki jalur file
+try:
+    with open(model_path, 'rb') as f:
+        model_SVM = pickle.load(f)
+except FileNotFoundError:
+    st.error(f"File model tidak ditemukan di: {model_path}")
+    st.stop()
 
 # Judul Aplikasi
 st.title('Prediksi Spesies Ikan')
@@ -12,7 +17,7 @@ st.title('Prediksi Spesies Ikan')
 # Dropdown untuk memilih model
 model_choice = st.selectbox(
     'Pilih Model untuk Prediksi:',
-    ('SVM')  # Menyediakan pilihan model sesuai kebutuhan, Anda bisa menambahkan model lain di sini
+    ('SVM')  # Tambahkan model lain jika ada
 )
 
 # Input untuk setiap fitur ikan
@@ -24,7 +29,6 @@ w_l_ratio = st.number_input('Rasio Berat ke Panjang (w_l_ratio):', min_value=0.0
 if st.button('Prediksi Spesies'):
     features = np.array([[length, weight, w_l_ratio]])
     
-    # Memilih model berdasarkan pilihan pengguna
     if model_choice == 'SVM':
         model = model_SVM
     
