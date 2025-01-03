@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 # Memuat file model SVM
-model_path = 'd:/svm_model.pkl'  # Perbaiki jalur file
+model_path = './svm_model.pkl' # Perbaiki jalur file
 try:
     with open(model_path, 'rb') as f:
         model_SVM = pickle.load(f)
